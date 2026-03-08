@@ -1,0 +1,484 @@
+{
+  "arabicLetters": [
+    "ا",
+    "ب",
+    "ت",
+    "ث",
+    "ج",
+    "ح",
+    "خ",
+    "د",
+    "ذ",
+    "ر",
+    "ز",
+    "س",
+    "ش",
+    "ص",
+    "ض",
+    "ط",
+    "ظ",
+    "ع",
+    "غ",
+    "ف",
+    "ق",
+    "ك",
+    "ل",
+    "م",
+    "ن",
+    "ه",
+    "و",
+    "ي"
+  ],
+  "conditions": [
+    { "type": "letter", "template": "يبدأ بحرف \"{letter}\"" },
+    { "type": "letter", "template": "ينتهي بحرف \"{letter}\"" },
+    { "type": "letter", "template": "يحتوي على حرف \"{letter}\"" },
+    { "type": "letter", "template": "مفيهوش حرف \"{letter}\"" },
+    { "type": "static", "text": "فيه حرف مكرر" },
+    { "type": "static", "text": "فيه حرفين متكررين" },
+    { "type": "static", "text": "من 3 حروف بس" },
+    { "type": "static", "text": "من 4 حروف بس" },
+    { "type": "static", "text": "من 5 حروف أو أكتر" },
+    { "type": "static", "text": "من 6 حروف أو أكتر" },
+    { "type": "static", "text": "اسمه مكون من كلمتين" },
+    { "type": "static", "text": "اسمه مكون من كلمة واحدة" }
+  ],
+  "categories": [
+    {
+      "id": "football_players",
+      "name": "لاعبين كورة",
+      "icon": "⚽",
+      "questions": [
+        { "text": "لاعب كورة", "extraConditions": [] },
+        { "text": "لاعب حاصل على البالون دور", "extraConditions": [] },
+        { "text": "لاعب في الدوري الإنجليزي", "extraConditions": [] },
+        { "text": "لاعب في الدوري الإسباني", "extraConditions": [] },
+        { "text": "لاعب في الدوري السعودي", "extraConditions": [] },
+        { "text": "لاعب في الدوري المصري", "extraConditions": [] },
+        { "text": "لاعب حارس مرمى", "extraConditions": [] },
+        { "text": "لاعب هداف تاريخي", "extraConditions": [] },
+        { "text": "لاعب منتخب مصر", "extraConditions": [] },
+        { "text": "لاعب منتخب البرازيل", "extraConditions": [] },
+        { "text": "لاعب منتخب فرنسا", "extraConditions": [] },
+        { "text": "لاعب مدافع", "extraConditions": [] },
+        { "text": "لاعب وسط", "extraConditions": [] },
+        { "text": "لاعب متقاعد أسطوري", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "football_clubs",
+      "name": "أندية كورة",
+      "icon": "🏟️",
+      "questions": [
+        { "text": "نادي كورة", "extraConditions": [] },
+        { "text": "نادي أوروبي", "extraConditions": [] },
+        { "text": "نادي إنجليزي", "extraConditions": [] },
+        { "text": "نادي إسباني", "extraConditions": [] },
+        { "text": "نادي عربي", "extraConditions": [] },
+        { "text": "نادي مصري", "extraConditions": [] },
+        { "text": "نادي فاز بدوري أبطال أوروبا", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "geography",
+      "name": "جغرافيا",
+      "icon": "🌍",
+      "questions": [
+        { "text": "دولة", "extraConditions": [] },
+        { "text": "دولة في أفريقيا", "extraConditions": [] },
+        { "text": "دولة في آسيا", "extraConditions": [] },
+        { "text": "دولة في أوروبا", "extraConditions": [] },
+        { "text": "دولة في أمريكا اللاتينية", "extraConditions": [] },
+        { "text": "دولة عربية", "extraConditions": [] },
+        { "text": "عاصمة دولة", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "actors",
+      "name": "ممثلين",
+      "icon": "🎭",
+      "questions": [
+        { "text": "ممثل", "extraConditions": [] },
+        { "text": "ممثلة", "extraConditions": [] },
+        { "text": "ممثل مصري", "extraConditions": [] },
+        { "text": "ممثلة مصرية", "extraConditions": [] },
+        { "text": "ممثل عربي", "extraConditions": [] },
+        { "text": "ممثل أمريكي", "extraConditions": [] },
+        { "text": "ممثلة أمريكية", "extraConditions": [] },
+        { "text": "ممثل حاصل على أوسكار", "extraConditions": [] },
+        { "text": "ممثل كوميدي", "extraConditions": [] },
+        { "text": "ممثل أكشن", "extraConditions": [] },
+        { "text": "ممثل من زمان", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "movies",
+      "name": "أفلام",
+      "icon": "🎬",
+      "questions": [
+        { "text": "فيلم", "extraConditions": [] },
+        { "text": "فيلم مصري", "extraConditions": [] },
+        { "text": "فيلم مصري قديم", "extraConditions": [] },
+        { "text": "فيلم أجنبي", "extraConditions": [] },
+        { "text": "فيلم أكشن", "extraConditions": [] },
+        { "text": "فيلم كوميدي", "extraConditions": [] },
+        { "text": "فيلم رعب", "extraConditions": [] },
+        { "text": "فيلم رومانسي", "extraConditions": [] },
+        { "text": "فيلم خيال علمي", "extraConditions": [] },
+        { "text": "فيلم حاصل على أوسكار", "extraConditions": [] },
+        { "text": "فيلم مارفل", "extraConditions": [] },
+        { "text": "فيلم ديزني", "extraConditions": [] },
+        { "text": "فيلم أنيميشن", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "series",
+      "name": "مسلسلات",
+      "icon": "📺",
+      "questions": [
+        { "text": "مسلسل", "extraConditions": [] },
+        { "text": "مسلسل مصري", "extraConditions": [] },
+        { "text": "مسلسل أمريكي", "extraConditions": [] },
+        { "text": "مسلسل كوميدي", "extraConditions": [] },
+        { "text": "مسلسل جريمة وغموض", "extraConditions": [] },
+        { "text": "مسلسل نتفليكس", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "theater",
+      "name": "مسرحيات",
+      "icon": "🎪",
+      "questions": [
+        { "text": "مسرحية", "extraConditions": [] },
+        { "text": "مسرحية مصرية كوميدية", "extraConditions": [] },
+        { "text": "مسرحية لعادل إمام", "extraConditions": [] },
+        { "text": "مسرحية غربية مشهورة", "extraConditions": [] },
+        { "text": "مسرحية لشكسبير", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "singers",
+      "name": "مغنيين",
+      "icon": "🎤",
+      "questions": [
+        { "text": "مطرب أو مطربة", "extraConditions": [] },
+        { "text": "مطرب مصري", "extraConditions": [] },
+        { "text": "مطربة مصرية", "extraConditions": [] },
+        { "text": "مطرب خليجي", "extraConditions": [] },
+        { "text": "مطربة لبنانية", "extraConditions": [] },
+        { "text": "مطرب عربي", "extraConditions": [] },
+        { "text": "مطرب أجنبي", "extraConditions": [] },
+        { "text": "مطربة أجنبية", "extraConditions": [] },
+        { "text": "فرقة موسيقية", "extraConditions": [] },
+        { "text": "مطرب راب عربي", "extraConditions": [] },
+        { "text": "مطرب زمان أسطوري", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "songs",
+      "name": "أغاني",
+      "icon": "🎵",
+      "questions": [
+        { "text": "أغنية مصرية", "extraConditions": [] },
+        { "text": "أغنية عربية قديمة", "extraConditions": [] },
+        { "text": "أغنية أجنبية", "extraConditions": [] },
+        { "text": "أغنية رومانسية", "extraConditions": [] },
+        { "text": "أغنية شعبية", "extraConditions": [] },
+        { "text": "أغنية من فيلم", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "حيوانات",
+      "icon": "🦁",
+      "questions": [
+        { "text": "حيوان", "extraConditions": [] },
+        { "text": "حيوان أليف", "extraConditions": [] },
+        { "text": "حيوان بري", "extraConditions": [] },
+        { "text": "حيوان بحري", "extraConditions": [] },
+        { "text": "حيوان طائر", "extraConditions": [] },
+        { "text": "حيوان مفترس", "extraConditions": [] },
+        { "text": "حيوان في الغابة", "extraConditions": [] },
+        { "text": "حيوان في الصحراء", "extraConditions": [] },
+        { "text": "حشرة", "extraConditions": [] },
+        { "text": "زواحف", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "طعام وأكل",
+      "icon": "🍕",
+      "questions": [
+        { "text": "أكلة", "extraConditions": [] },
+        { "text": "أكلة مصرية", "extraConditions": [] },
+        { "text": "أكلة شرقية", "extraConditions": [] },
+        { "text": "أكلة إيطالية", "extraConditions": [] },
+        { "text": "أكلة سريعة", "extraConditions": [] },
+        { "text": "حلويات", "extraConditions": [] },
+        { "text": "مشروب", "extraConditions": [] },
+        { "text": "فطار مصري", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "fruits",
+      "name": "فواكه",
+      "icon": "🍎",
+      "questions": [
+        { "text": "فاكهة", "extraConditions": [] },
+        { "text": "فاكهة استوائية", "extraConditions": [] },
+        { "text": "فاكهة حمراء", "extraConditions": [] },
+        { "text": "فاكهة صيفي", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "vegetables",
+      "name": "خضروات",
+      "icon": "🥦",
+      "questions": [
+        { "text": "خضار", "extraConditions": [] },
+        { "text": "خضار أخضر", "extraConditions": [] },
+        { "text": "خضار بيتعمل فيه أكلة مصرية", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "رياضات",
+      "icon": "🏅",
+      "questions": [
+        { "text": "رياضة", "extraConditions": [] },
+        { "text": "رياضة جماعية", "extraConditions": [] },
+        { "text": "رياضة فردية", "extraConditions": [] },
+        { "text": "رياضة مائية", "extraConditions": [] },
+        { "text": "رياضة أولمبية", "extraConditions": [] },
+        { "text": "فن قتالي", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "athletes",
+      "name": "رياضيين",
+      "icon": "🏆",
+      "questions": [
+        { "text": "رياضي مشهور", "extraConditions": [] },
+        { "text": "بطل أولمبي", "extraConditions": [] },
+        { "text": "لاعب تنس مشهور", "extraConditions": [] },
+        { "text": "ملاكم مشهور", "extraConditions": [] },
+        { "text": "لاعب كرة سلة", "extraConditions": [] },
+        { "text": "سباح مشهور", "extraConditions": [] },
+        { "text": "عداء مشهور", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "scientists",
+      "name": "علماء ومخترعون",
+      "icon": "🔬",
+      "questions": [
+        { "text": "عالم مشهور", "extraConditions": [] },
+        { "text": "عالم فيزياء", "extraConditions": [] },
+        { "text": "عالم كيمياء", "extraConditions": [] },
+        { "text": "عالم عربي قديم", "extraConditions": [] },
+        { "text": "مخترع مشهور", "extraConditions": [] },
+        { "text": "عالم حاصل على نوبل", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "inventions",
+      "name": "اختراعات",
+      "icon": "💡",
+      "questions": [
+        { "text": "اختراع مشهور", "extraConditions": [] },
+        { "text": "اختراع في القرن العشرين", "extraConditions": [] },
+        { "text": "اختراع تكنولوجي", "extraConditions": [] },
+        {
+          "text": "اختراع غير ذلك بيستخدمه الناس يومياً",
+          "extraConditions": []
+        }
+      ]
+    },
+    {
+      "id": "professions",
+      "name": "مهن",
+      "icon": "👷",
+      "questions": [
+        { "text": "مهنة", "extraConditions": [] },
+        { "text": "مهنة طبية", "extraConditions": [] },
+        { "text": "مهنة فنية", "extraConditions": [] },
+        { "text": "مهنة هندسية", "extraConditions": [] },
+        { "text": "مهنة قديمة", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "cars",
+      "name": "سيارات",
+      "icon": "🚗",
+      "questions": [
+        { "text": "ماركة سيارة", "extraConditions": [] },
+        { "text": "سيارة ألمانية", "extraConditions": [] },
+        { "text": "سيارة يابانية", "extraConditions": [] },
+        { "text": "سيارة أمريكية", "extraConditions": [] },
+        { "text": "سيارة رياضية", "extraConditions": [] },
+        { "text": "سيارة فخمة", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "brands",
+      "name": "ماركات عالمية",
+      "icon": "🏷️",
+      "questions": [
+        { "text": "ماركة مشهورة", "extraConditions": [] },
+        { "text": "ماركة ملابس", "extraConditions": [] },
+        { "text": "ماركة أحذية", "extraConditions": [] },
+        { "text": "ماركة إلكترونيات", "extraConditions": [] },
+        { "text": "ماركة طعام وشراب", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "apps",
+      "name": "تطبيقات وتكنولوجيا",
+      "icon": "📱",
+      "questions": [
+        { "text": "تطبيق موبايل مشهور", "extraConditions": [] },
+        { "text": "موقع إنترنت مشهور", "extraConditions": [] },
+        { "text": "شبكة اجتماعية", "extraConditions": [] },
+        { "text": "شركة تكنولوجيا عملاقة", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "superheroes",
+      "name": "أبطال خارقين",
+      "icon": "🦸",
+      "questions": [
+        { "text": "بطل خارق", "extraConditions": [] },
+        { "text": "شخصية مارفل", "extraConditions": [] },
+        { "text": "شخصية DC", "extraConditions": [] },
+        { "text": "شرير مشهور", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "cartoon",
+      "name": "شخصيات كرتون",
+      "icon": "🎨",
+      "questions": [
+        { "text": "شخصية كرتون", "extraConditions": [] },
+        { "text": "شخصية ديزني", "extraConditions": [] },
+        { "text": "شخصية بيكسار", "extraConditions": [] },
+        { "text": "شخصية أنيمي", "extraConditions": [] },
+        { "text": "مسلسل كرتون", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "video_games",
+      "name": "ألعاب فيديو",
+      "icon": "🎮",
+      "questions": [
+        { "text": "لعبة فيديو مشهورة", "extraConditions": [] },
+        { "text": "شخصية في لعبة فيديو", "extraConditions": [] },
+        { "text": "لعبة بلايستيشن", "extraConditions": [] },
+        { "text": "لعبة موبايل مشهورة", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "instruments",
+      "name": "آلات موسيقية",
+      "icon": "🎸",
+      "questions": [
+        { "text": "آلة موسيقية", "extraConditions": [] },
+        { "text": "آلة وترية", "extraConditions": [] },
+        { "text": "آلة إيقاع", "extraConditions": [] },
+        { "text": "آلة نفخ", "extraConditions": [] },
+        { "text": "آلة شرقية", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "books",
+      "name": "كتب وروايات",
+      "icon": "📚",
+      "questions": [
+        { "text": "رواية مشهورة", "extraConditions": [] },
+        { "text": "رواية عربية", "extraConditions": [] },
+        { "text": "رواية أجنبية", "extraConditions": [] },
+        { "text": "كتاب ديني مشهور", "extraConditions": [] },
+        { "text": "كتاب لنجيب محفوظ", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "historical_figures",
+      "name": "شخصيات تاريخية",
+      "icon": "👑",
+      "questions": [
+        { "text": "شخصية تاريخية", "extraConditions": [] },
+        { "text": "فرعون مصري", "extraConditions": [] },
+        { "text": "ملك أو ملكة تاريخية", "extraConditions": [] },
+        { "text": "قائد عسكري تاريخي", "extraConditions": [] },
+        { "text": "نبي", "extraConditions": [] },
+        { "text": "خليفة إسلامي", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "presidents",
+      "name": "رؤساء وملوك",
+      "icon": "🏛️",
+      "questions": [
+        { "text": "رئيس دولة", "extraConditions": [] },
+        { "text": "رئيس أمريكي", "extraConditions": [] },
+        { "text": "رئيس مصري", "extraConditions": [] },
+        { "text": "ملك أو أمير عربي", "extraConditions": [] },
+        { "text": "زعيم سياسي مشهور", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "plants",
+      "name": "نباتات وأشجار",
+      "icon": "🌳",
+      "questions": [
+        { "text": "شجرة مشهورة", "extraConditions": [] },
+        { "text": "نبتة منزلية", "extraConditions": [] },
+        { "text": "زهرة مشهورة", "extraConditions": [] },
+        { "text": "نبات طبي", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "ألوان",
+      "icon": "🎨",
+      "questions": [
+        { "text": "لون", "extraConditions": [] },
+        { "text": "درجة لون", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "clothes",
+      "name": "ملابس وموضة",
+      "icon": "👗",
+      "questions": [
+        { "text": "قطعة ملابس", "extraConditions": [] },
+        { "text": "إكسسوار", "extraConditions": [] },
+        { "text": "نوع حذاء", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "languages",
+      "name": "لغات",
+      "icon": "🗣️",
+      "questions": [
+        { "text": "لغة مشهورة", "extraConditions": [] },
+        { "text": "لغة أوروبية", "extraConditions": [] },
+        { "text": "لغة آسيوية", "extraConditions": [] }
+      ]
+    },
+    {
+      "id": "zodiac",
+      "name": "أبراج فلكية",
+      "icon": "⭐",
+      "questions": [{ "text": "برج فلكي", "extraConditions": [] }]
+    },
+    {
+      "id": "months",
+      "name": "أشهر وأيام",
+      "icon": "📅",
+      "questions": [
+        { "text": "شهر في السنة", "extraConditions": [] },
+        { "text": "يوم في الأسبوع", "extraConditions": [] }
+      ]
+    }
+  ]
+}
