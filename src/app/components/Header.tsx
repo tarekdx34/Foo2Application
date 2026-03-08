@@ -1,22 +1,36 @@
-import logoImage from "../../assets/e6b60987f1bbbd45292824691c50a66ebae42bce.png";
+import { motion } from "motion/react";
+import logoImage from "../../assets/Logo.svg";
 
 export function Header() {
   return (
-    <header className="w-full py-6 flex flex-col items-center justify-center">
-      <div className="relative">
-        <img 
-          src={logoImage} 
-          alt="فووق" 
-          className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-lg"
+    <header className="w-full py-3 md:py-4 flex flex-col items-center justify-center shrink-0">
+      <motion.div
+        className="relative"
+        animate={{
+          y: [0, -10, 0],
+          rotate: [-2, 2, -2],
+        }}
+        transition={{
+          duration: 2.8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        whileHover={{
+          scale: 1.12,
+          rotate: [0, -8, 8, -5, 5, 0],
+          transition: { duration: 0.5, ease: "easeInOut" },
+        }}
+        whileTap={{ scale: 0.92, rotate: 0 }}
+      >
+        <img
+          src={logoImage}
+          alt="فووق"
+          className="w-28 h-28 md:w-36 md:h-36 object-contain"
+          style={{
+            filter: "drop-shadow(0 6px 12px rgba(120,53,15,0.45)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+          }}
         />
-      </div>
-      <h1 className="text-4xl md:text-5xl font-black text-white mt-2 tracking-wide" 
-          style={{ 
-            textShadow: '3px 3px 0px #D97706, 6px 6px 0px rgba(0,0,0,0.2)',
-            WebkitTextStroke: '2px #78350F'
-          }}>
-        فــووق
-      </h1>
+      </motion.div>
     </header>
   );
 }

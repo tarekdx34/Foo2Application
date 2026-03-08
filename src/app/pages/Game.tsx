@@ -197,11 +197,11 @@ export function Game() {
   const progress = (timeLeft / settings.timePerQuestion) * 100;
 
   return (
-    <div className="min-h-screen game-background text-white">
+    <div className="min-h-screen md:h-screen md:overflow-hidden game-background text-white flex flex-col">
       <Header />
 
-      <div className="container mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="flex-1 min-h-0 container mx-auto px-4 pb-4 md:pb-0 md:overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 md:h-full md:items-center">
           {/* Left Side - Deck */}
           <div className="lg:col-span-3 flex flex-col items-center justify-center">
             <CardDeck count={deckCards} isDealing={isDealingCard} />
@@ -209,7 +209,7 @@ export function Game() {
 
           {/* Center - Card */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center">
-            <div className="mb-8">
+            <div className="mb-4 md:mb-3">
               <motion.div
                 key={dealCount}
                 className="relative w-80 h-96 cursor-pointer"
