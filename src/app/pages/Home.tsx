@@ -26,10 +26,10 @@ export function Home() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen md:overflow-hidden game-background text-white flex flex-col">
+    <div className="min-h-screen game-background text-white">
       <Header />
       
-      <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden container mx-auto px-4 pb-6 max-w-3xl md:flex md:flex-col md:justify-center">
+      <div className="container mx-auto px-4 pb-12 max-w-3xl">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

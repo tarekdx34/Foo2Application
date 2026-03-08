@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useGame } from "../context/GameContext";
-import { Header } from "../components/Header";
 import { motion, AnimatePresence } from "motion/react";
 import gameData from "../../data/data.json";
+import logoImage from "../../assets/logo.svg";
 
 const isMobileDevice = () => window.innerWidth < 768;
 
@@ -198,17 +198,16 @@ export function Game() {
 
   return (
     <div className="min-h-screen md:h-screen md:overflow-hidden game-background text-white flex flex-col">
-      <Header />
 
-      <div className="flex-1 min-h-0 container mx-auto px-4 pb-4 md:pb-0 md:overflow-hidden">
+      <div className="flex-1 min-h-0 container mx-auto px-4 py-4 md:py-0 md:overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 md:h-full md:items-center">
           {/* Left Side - Deck */}
-          <div className="lg:col-span-3 flex flex-col items-center justify-center">
+          <div className="lg:col-span-2 flex flex-col items-center justify-center">
             <CardDeck count={deckCards} isDealing={isDealingCard} />
           </div>
 
           {/* Center - Card */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+          <div className="lg:col-span-7 flex flex-col items-center justify-center">
             <div className="mb-4 md:mb-3">
               <motion.div
                 key={dealCount}
@@ -331,82 +330,63 @@ export function Game() {
             )}
           </div>
 
-          {/* Right Side - Timer & Scores */}
-          <div className="lg:col-span-3 flex flex-col items-center gap-6">
+          {/* Right Side - Logo, Timer & Scores */}
+          <div className="lg:col-span-3 flex flex-col items-center gap-4">
+            {/* Logo */}
+            <motion.img
+              src={logoImage}
+              alt="فووق"
+              className="w-20 h-20 object-contain hidden lg:block"
+              style={{ filter: "drop-shadow(0 4px 8px rgba(120,53,15,0.45))" }}
+              animate={{ y: [0, -6, 0], rotate: [-2, 2, -2] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+            />
+
             {/* Timer */}
-            <div className="relative w-32 h-32">
+            <div className="relative w-28 h-28">
               <svg className="w-full h-full transform -rotate-90">
+                <circle cx="56" cy="56" r="48" stroke="#78350F" strokeWidth="8" fill="none" />
                 <circle
-                  cx="64"
-                  cy="64"
-                  r="56"
-                  stroke="#78350F"
-                  strokeWidth="8"
-                  fill="none"
-                />
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="56"
+                  cx="56" cy="56" r="48"
                   stroke={timeLeft <= 5 ? "#EF4444" : "#FBBF24"}
                   strokeWidth="8"
                   fill="none"
-                  strokeDasharray={`${2 * Math.PI * 56}`}
-                  strokeDashoffset={`${2 * Math.PI * 56 * (1 - progress / 100)}`}
+                  strokeDasharray={`${2 * Math.PI * 48}`}
+                  strokeDashoffset={`${2 * Math.PI * 48 * (1 - progress / 100)}`}
                   className="transition-all duration-1000"
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span
-                  className={`text-4xl font-black ${timeLeft <= 5 ? "text-red-500" : "text-white"}`}
-                >
+                <span className={`text-3xl font-black ${timeLeft <= 5 ? "text-red-500" : "text-white"}`}>
                   {timeLeft}
                 </span>
               </div>
             </div>
 
             {/* Scoreboard */}
-            <div className="w-full bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-4 border-4 border-amber-900 shadow-xl">
-              <h3 className="text-2xl font-black text-amber-900 text-center mb-4">
+            <div className="w-full bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-3 border-4 border-amber-900 shadow-xl">
+              <h3 className="text-xl font-black text-amber-900 text-center mb-3">
                 النتائج
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-2 max-h-48 overflow-y-auto game-scrollbar">
                 {players.map((player, index) => (
                   <div
                     key={player.id}
-                    className={`flex items-center justify-between p-3 rounded-xl border-3 ${
+                    className={`flex items-center justify-between p-2 rounded-xl border-2 ${
                       player.id === currentPlayer.id
                         ? "bg-emerald-500 border-emerald-700"
                         : "bg-white/90 border-amber-900"
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span
-                        className={`text-xl font-black ${
-                          player.id === currentPlayer.id
-                            ? "text-white"
-                            : "text-amber-900"
-                        }`}
-                      >
+                      <span className={`text-base font-black ${player.id === currentPlayer.id ? "text-white" : "text-amber-900"}`}>
                         {index + 1}.
                       </span>
-                      <span
-                        className={`text-lg font-black ${
-                          player.id === currentPlayer.id
-                            ? "text-white"
-                            : "text-amber-900"
-                        }`}
-                      >
+                      <span className={`text-sm font-black truncate max-w-[80px] ${player.id === currentPlayer.id ? "text-white" : "text-amber-900"}`}>
                         {player.name}
                       </span>
                     </div>
-                    <span
-                      className={`text-2xl font-black ${
-                        player.id === currentPlayer.id
-                          ? "text-white"
-                          : "text-amber-900"
-                      }`}
-                    >
+                    <span className={`text-xl font-black ${player.id === currentPlayer.id ? "text-white" : "text-amber-900"}`}>
                       {player.score}
                     </span>
                   </div>
