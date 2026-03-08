@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import logoImage from "../../assets/Logo.svg";
+import logoImage from "../../assets/logo.svg";
 
 export function Header() {
   return (
