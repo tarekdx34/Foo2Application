@@ -48,23 +48,23 @@ export function Home() {
               <h3 className="text-xl font-black text-amber-900">إضافة اللاعبين</h3>
             </div>
             
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-col gap-2 mb-4">
               <input
                 type="text"
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleAddPlayer()}
                 placeholder="اكتب اسم اللاعب"
-                className="flex-1 px-4 py-3 rounded-xl border-4 border-amber-900 text-amber-900 font-bold text-lg focus:outline-none focus:ring-4 focus:ring-orange-400"
+                className="w-full px-4 py-3 rounded-xl border-4 border-amber-900 text-amber-900 font-bold text-lg focus:outline-none focus:ring-4 focus:ring-orange-400"
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddPlayer}
-                className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl border-4 border-amber-900 shadow-lg flex items-center gap-2"
+                className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl border-4 border-amber-900 shadow-lg flex items-center justify-center gap-2"
               >
                 <Plus className="w-5 h-5" />
-                إضافة
+                إضافة لاعب
               </motion.button>
             </div>
 

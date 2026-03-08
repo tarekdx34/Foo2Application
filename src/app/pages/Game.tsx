@@ -5,6 +5,8 @@ import { Header } from "../components/Header";
 import { motion, AnimatePresence } from "motion/react";
 import gameData from "../../data/data.json";
 
+const isMobileDevice = () => window.innerWidth < 768;
+
 interface Card {
   categoryId: string;
   categoryName: string;
@@ -69,12 +71,12 @@ function CardDeck({ count, isDealing }: { count: number; isDealing: boolean }) {
               style={{ zIndex: i + 1 }}
               initial={false}
               animate={
-                isTop && isDealing
+                isTop && isDealing && !isMobileDevice()
                   ? { x: 240, y: -30, rotate: 22, opacity: 0, scale: 0.88 }
                   : { x: xOff, y: yOff, rotate: rot, opacity: isVisible ? 1 : 0, scale: 1 }
               }
               transition={{
-                duration: isTop && isDealing ? 0.42 : 0.28,
+                duration: isTop && isDealing && !isMobileDevice() ? 0.42 : 0.28,
                 ease: "easeOut",
               }}
             >
@@ -212,9 +214,9 @@ export function Game() {
                 key={dealCount}
                 className="relative w-80 h-96 cursor-pointer"
                 onClick={handleCardClick}
-                initial={{ x: -70, opacity: 0, rotate: -4 }}
+                initial={isMobileDevice() ? false : { x: -70, opacity: 0, rotate: -4 }}
                 animate={{ x: 0, opacity: 1, rotate: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                transition={isMobileDevice() ? { duration: 0 } : { duration: 0.4, ease: "easeOut" }}
                 style={{
                   transformStyle: "preserve-3d",
                   perspective: "1000px",
