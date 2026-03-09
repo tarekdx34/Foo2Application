@@ -1,19 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useGame } from '../context/GameContext';
 import { Header } from '../components/Header';
 import { X, Plus, Users, Download, CheckCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useInstallPrompt } from '../../hooks/useInstallPrompt';
+import { useSoundManager } from '../../hooks/useSoundManager';
 
 export function Home() {
   const [playerName, setPlayerName] = useState('');
   const { players, addPlayer, removePlayer } = useGame();
   const navigate = useNavigate();
   const { canInstall, isInstalled, triggerInstall } = useInstallPrompt();
+  const { playBackgroundMusic, stopBackgroundMusic, playButtonClick } = useSoundManager();
+
+  useEffect(() => {
+    playBackgroundMusic('home');
+    return () => stopBackgroundMusic();
+  }, []);
 
   const handleAddPlayer = () => {
     if (playerName.trim()) {
+      playButtonClick();
       addPlayer(playerName.trim());
       setPlayerName('');
     }
@@ -21,6 +29,7 @@ export function Home() {
 
   const handleStartGame = () => {
     if (players.length >= 2) {
+      playButtonClick();
       navigate('/settings');
     }
   };

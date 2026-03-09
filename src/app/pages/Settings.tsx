@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useGame } from '../context/GameContext';
 import { Header } from '../components/Header';
 import { Clock, Layers, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import gameData from '../../data/data.json';
+import { useSoundManager } from '../../hooks/useSoundManager';
 
 const CARD_OPTIONS = [20, 30, 50, 100];
 
@@ -14,8 +15,15 @@ export function Settings() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(settings.categories);
   const [selectedTime, setSelectedTime] = useState(settings.timePerQuestion);
   const [selectedCards, setSelectedCards] = useState(settings.totalCards);
+  const { playBackgroundMusic, stopBackgroundMusic, playButtonClick } = useSoundManager();
+
+  useEffect(() => {
+    playBackgroundMusic('settings');
+    return () => stopBackgroundMusic();
+  }, []);
 
   const toggleCategory = (category: string) => {
+    playButtonClick();
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter(c => c !== category));
     } else {
@@ -25,6 +33,7 @@ export function Settings() {
 
   const handleStartGame = () => {
     if (selectedCategories.length > 0) {
+      playButtonClick();
       updateSettings({
         categories: selectedCategories,
         timePerQuestion: selectedTime,

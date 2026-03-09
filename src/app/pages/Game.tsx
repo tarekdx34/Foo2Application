@@ -1,11 +1,55 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useGame } from "../context/GameContext";
 import { motion, AnimatePresence } from "motion/react";
 import gameData from "../../data/data.json";
 import logoImage from "../../assets/logo.svg";
+import { useSoundManager } from "../../hooks/useSoundManager";
+import { SoundControls } from "../components/SoundControls";
 
 const isMobileDevice = () => window.innerWidth < 768;
+
+// ── scattered logo wallpaper ──────────────────────────────────────────
+const LOGO_COUNT = 35;
+function LogoBackground() {
+  const logos = useMemo(() => {
+    const seed = (n: number, s: number) => ((Math.sin(n * s + 1.7) * 43758.5453) % 1 + 1) % 1;
+    return Array.from({ length: LOGO_COUNT }, (_, i) => ({
+      top:     `${seed(i, 5)  * 100}%`,
+      left:    `${seed(i, 7)  * 100}%`,
+      size:    60 + seed(i, 3) * 120,          // 60–180 px
+      opacity: 0.12 + seed(i, 11) * 0.18,      // 12–30 %
+      rotate:  seed(i, 13) * 360 - 180,
+      duration:5 + seed(i, 17) * 7,
+      delay:   seed(i, 19) * -10,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" style={{ zIndex: 0 }}>
+      {logos.map((l, i) => (
+        <motion.img
+          key={i}
+          src={logoImage}
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: l.top,
+            left: l.left,
+            width: l.size,
+            height: l.size,
+            opacity: l.opacity,
+            rotate: l.rotate,
+            filter: 'brightness(1.4) saturate(0.6)',
+          }}
+          animate={{ y: [0, -16, 0], rotate: [l.rotate - 5, l.rotate + 5, l.rotate - 5] }}
+          transition={{ duration: l.duration, repeat: Infinity, ease: 'easeInOut', delay: l.delay }}
+        />
+      ))}
+    </div>
+  );
+}
 
 interface Card {
   categoryId: string;
@@ -111,6 +155,10 @@ export function Game() {
     incrementCardsPlayed,
   } = useGame();
   const navigate = useNavigate();
+  const {
+    playCardFlip, playCorrect, playWrong,
+    playTimerTick, playTimerUrgent, playWinner,
+  } = useSoundManager();
 
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -119,51 +167,56 @@ export function Game() {
   const [deckCards, setDeckCards] = useState(settings.totalCards);
   const [isDealingCard, setIsDealingCard] = useState(false);
   const [dealCount, setDealCount] = useState(0);
+  const prevTimeLeft = useRef(settings.timePerQuestion);
 
   useEffect(() => {
-    if (players.length === 0) {
-      navigate("/");
-      return;
-    }
-    // Generate first card
+    if (players.length === 0) { navigate("/"); return; }
     const card = generateCard(settings.categories);
     setCurrentCard(card);
   }, []);
 
+  // Timer countdown + tick sounds
   useEffect(() => {
     if (isTimerRunning && timeLeft > 0) {
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
+      // Play sound only when timeLeft actually decreased (avoid double-fire)
+      if (timeLeft < prevTimeLeft.current) {
+        if (timeLeft <= 5) playTimerUrgent();
+        else               playTimerTick();
+      }
+      prevTimeLeft.current = timeLeft;
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
+    } else if (isTimerRunning && timeLeft === 0) {
       handleTimeOut();
     }
   }, [timeLeft, isTimerRunning]);
 
   const handleCardClick = () => {
     if (!isFlipped) {
+      playCardFlip();
       setIsFlipped(true);
       setTimeout(() => {
         setIsTimerRunning(true);
+        prevTimeLeft.current = settings.timePerQuestion;
       }, 600);
     }
   };
 
   const handleTimeOut = () => {
     setIsTimerRunning(false);
-    // No points for timeout
     nextTurn();
   };
 
   const handleCorrect = () => {
     setIsTimerRunning(false);
+    playCorrect();
     updatePlayerScore(players[currentPlayerIndex].id, 1);
     nextTurn();
   };
 
   const handleWrong = () => {
     setIsTimerRunning(false);
+    playWrong();
     nextTurn();
   };
 
@@ -171,12 +224,14 @@ export function Game() {
     incrementCardsPlayed();
 
     if (cardsPlayed + 1 >= settings.totalCards) {
-      navigate("/results");
+      playWinner();
+      setTimeout(() => navigate("/results"), 1000);
       return;
     }
 
     setIsFlipped(false);
     setTimeLeft(settings.timePerQuestion);
+    prevTimeLeft.current = settings.timePerQuestion;
     setDeckCards((prev) => prev - 1);
     nextPlayer();
     setIsDealingCard(true);
@@ -197,9 +252,10 @@ export function Game() {
   const progress = (timeLeft / settings.timePerQuestion) * 100;
 
   return (
-    <div className="min-h-screen md:h-screen md:overflow-hidden game-background text-white flex flex-col">
+    <div className="relative min-h-screen md:h-screen md:overflow-hidden game-background text-white flex flex-col">
+      <LogoBackground />
 
-      <div className="flex-1 min-h-0 container mx-auto px-4 py-4 md:py-0 md:overflow-hidden">
+      <div className="relative z-10 flex-1 min-h-0 container mx-auto px-4 py-4 md:py-0 md:overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 md:h-full md:items-center">
           {/* Left Side - Deck */}
           <div className="lg:col-span-2 flex flex-col items-center justify-center">
@@ -333,14 +389,17 @@ export function Game() {
           {/* Right Side - Logo, Timer & Scores */}
           <div className="lg:col-span-3 flex flex-col items-center gap-4">
             {/* Logo */}
-            <motion.img
-              src={logoImage}
-              alt="فووق"
-              className="w-20 h-20 object-contain hidden lg:block"
-              style={{ filter: "drop-shadow(0 4px 8px rgba(120,53,15,0.45))" }}
-              animate={{ y: [0, -6, 0], rotate: [-2, 2, -2] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <div className="hidden lg:flex items-center justify-between w-full px-1">
+              <motion.img
+                src={logoImage}
+                alt="فووق"
+                className="w-20 h-20 object-contain"
+                style={{ filter: "drop-shadow(0 4px 8px rgba(120,53,15,0.45))" }}
+                animate={{ y: [0, -6, 0], rotate: [-2, 2, -2] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <SoundControls />
+            </div>
 
             {/* Timer */}
             <div className="relative w-28 h-28">
