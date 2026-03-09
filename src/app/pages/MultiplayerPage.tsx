@@ -14,10 +14,12 @@ import {
   CheckCircle2,
   X,
   LogOut,
+  Camera,
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Header } from "../components/Header";
 import { SoundControls } from "../components/SoundControls";
+import { QRScanner } from "../components/QRScanner";
 import { QRCode } from "../components/QRCode";
 import { useP2PMultiplayer } from "../../hooks/useP2PMultiplayer";
 import logoImage from "../../assets/logo.svg";
@@ -76,6 +78,7 @@ export function MultiplayerPage() {
   const [inputName, setInputName] = useState("");
   const [inputCode, setInputCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
 
   const phase = mp.roomState?.phase;
 
@@ -206,9 +209,33 @@ export function MultiplayerPage() {
 
   // ── Join form ────────────────────────────────────────────────────────────
   if (view === "join") {
+    const handleJoin = (peerId: string) => {
+      mp.joinRoom(peerId, inputName.trim());
+    };
+
+    const handleScan = (raw: string) => {
+      setShowScanner(false);
+      // Extract peer ID from scanned URL or use raw value
+      let peerId = raw;
+      try {
+        const url = new URL(raw);
+        const fromUrl = url.searchParams.get("join");
+        if (fromUrl) peerId = fromUrl;
+      } catch { /* raw is a peer ID */ }
+      // Auto-join if we have a name, otherwise fill the code field
+      if (inputName.trim()) {
+        mp.joinRoom(peerId, inputName.trim());
+      } else {
+        setInputCode(peerId);
+      }
+    };
+
     return (
       <div className="min-h-screen game-background text-white flex flex-col">
         <Header />
+        {showScanner && (
+          <QRScanner onScan={handleScan} onClose={() => setShowScanner(false)} />
+        )}
         <div className="flex-1 flex items-center justify-center px-4">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -227,12 +254,31 @@ export function MultiplayerPage() {
                 placeholder="اسمك"
                 className="w-full px-4 py-3 rounded-xl border-4 border-amber-900 text-amber-900 font-bold text-lg focus:outline-none"
               />
+
+              {/* Scan QR button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setShowScanner(true)}
+                className="w-full py-4 bg-amber-900 hover:bg-amber-800 text-white font-black text-xl rounded-2xl border-4 border-amber-700 flex items-center justify-center gap-3"
+              >
+                <Camera className="w-6 h-6" />
+                امسح الـ QR للانضمام
+              </motion.button>
+
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-px bg-amber-300" />
+                <span className="text-amber-800 font-bold text-sm">أو اكتب الكود</span>
+                <div className="flex-1 h-px bg-amber-300" />
+              </div>
+
               <input
                 type="text"
                 value={inputCode}
-                onChange={(e) => setInputCode(e.target.value)}
-                placeholder="الكود أو الرابط الكامل"
-                className="w-full px-4 py-3 rounded-xl border-4 border-amber-900 text-amber-900 font-bold text-base focus:outline-none"
+                onChange={(e) => setInputCode(e.target.value.toUpperCase())}
+                placeholder="كود الغرفة (6 أحرف)"
+                maxLength={6}
+                className="w-full px-4 py-3 rounded-xl border-4 border-amber-900 text-amber-900 font-bold text-base text-center tracking-widest focus:outline-none"
               />
               <GreenButton
                 disabled={
@@ -240,20 +286,9 @@ export function MultiplayerPage() {
                   !inputCode.trim() ||
                   mp.status === "joining"
                 }
-                onClick={() => {
-                  const raw = inputCode.trim();
-                  let peerId = raw;
-                  try {
-                    const url = new URL(raw);
-                    const fromUrl = url.searchParams.get("join");
-                    if (fromUrl) peerId = fromUrl;
-                  } catch {
-                    /* not a URL, use raw as peer ID */
-                  }
-                  mp.joinRoom(peerId, inputName.trim());
-                }}
+                onClick={() => handleJoin(inputCode.trim())}
               >
-                {mp.status === "joining" ? "⏳ جاري الاتصال..." : "انضم"}
+                {mp.status === "joining" ? "⏳ جاري الاتصال..." : "انضم بالكود"}
               </GreenButton>
             </div>
             <BackButton onClick={() => setView("landing")} />

@@ -369,9 +369,9 @@ export function useP2PMultiplayer() {
       setMyName(name);
       setStatus("hosting");
       try {
-        const id = await initPeer();
-        // Use last 6 chars of peerId as room code
-        const shortCode = id.slice(-6).toUpperCase();
+        // Use the code itself as the Peer ID so guests can connect with the code directly
+        const shortCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+        const id = await initPeer(shortCode);
         const hostPlayer: P2PPlayer = {
           id,
           name,
