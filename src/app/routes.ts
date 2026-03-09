@@ -3,22 +3,12 @@ import { Home } from "./pages/Home";
 import { Settings } from "./pages/Settings";
 import { Game } from "./pages/Game";
 import { Results } from "./pages/Results";
+import { MultiplayerPage } from "./pages/MultiplayerPage";
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: Home,
-  },
-  {
-    path: "/settings",
-    Component: Settings,
-  },
-  {
-    path: "/game",
-    Component: Game,
-  },
-  {
-    path: "/results",
-    Component: Results,
-  },
+  { path: "/", Component: Home },
+  { path: "/settings", Component: Settings },
+  { path: "/game", Component: Game },
+  { path: "/results", Component: Results },
+  { path: "/multiplayer", Component: MultiplayerPage },
 ]);

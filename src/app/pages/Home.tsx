@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useGame } from '../context/GameContext';
 import { Header } from '../components/Header';
-import { X, Plus, Users, Download, CheckCircle } from 'lucide-react';
+import { X, Plus, Users, Download, CheckCircle, Wifi } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useInstallPrompt } from '../../hooks/useInstallPrompt';
 import { useSoundManager } from '../../hooks/useSoundManager';
@@ -113,6 +113,18 @@ export function Home() {
               </p>
             )}
           </div>
+
+          {/* Multiplayer Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => { playButtonClick(); navigate('/multiplayer'); }}
+            className="w-full py-4 text-2xl font-black rounded-2xl border-4 border-amber-900 bg-amber-900 hover:bg-amber-800 text-white shadow-lg flex items-center justify-center gap-3"
+            style={{ boxShadow: '0 6px 0 rgba(120, 53, 15, 0.5)' }}
+          >
+            <Wifi className="w-7 h-7" />
+            لعب شبكي
+          </motion.button>
 
           {/* Start Button */}
           <motion.button
