@@ -193,6 +193,11 @@
     background-position: 0 0, 25px 25px;
   }
 
+  @keyframes logoBob {
+    0%, 100% { transform: translateY(0)    rotate(var(--r, 0deg)); }
+    50%       { transform: translateY(-18px) rotate(var(--r, 0deg)); }
+  }
+
   /* Styled scrollbar for categories */
   .game-scrollbar::-webkit-scrollbar {
     width: 10px;

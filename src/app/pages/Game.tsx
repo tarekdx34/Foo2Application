@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useGame } from "../context/GameContext";
 import { motion, AnimatePresence } from "motion/react";
@@ -9,26 +9,30 @@ import { SoundControls } from "../components/SoundControls";
 
 const isMobileDevice = () => window.innerWidth < 768;
 
-// ── scattered logo wallpaper ──────────────────────────────────────────
-const LOGO_COUNT = 35;
-function LogoBackground() {
-  const logos = useMemo(() => {
-    const seed = (n: number, s: number) => ((Math.sin(n * s + 1.7) * 43758.5453) % 1 + 1) % 1;
-    return Array.from({ length: LOGO_COUNT }, (_, i) => ({
-      top:     `${seed(i, 5)  * 100}%`,
-      left:    `${seed(i, 7)  * 100}%`,
-      size:    60 + seed(i, 3) * 120,          // 60–180 px
-      opacity: 0.12 + seed(i, 11) * 0.18,      // 12–30 %
-      rotate:  seed(i, 13) * 360 - 180,
-      duration:5 + seed(i, 17) * 7,
-      delay:   seed(i, 19) * -10,
-    }));
-  }, []);
+// ── scattered logo wallpaper — pure CSS animations (no JS per frame) ──
+const seed = (n: number, s: number) => ((Math.sin(n * s + 1.7) * 43758.5453) % 1 + 1) % 1;
+const LOGOS_DESKTOP = Array.from({ length: 30 }, (_, i) => ({
+  top:      `${seed(i, 5)  * 100}%`,
+  left:     `${seed(i, 7)  * 100}%`,
+  size:     60 + seed(i, 3) * 110,
+  opacity:  0.13 + seed(i, 11) * 0.17,
+  rotate:   seed(i, 13) * 360 - 180,
+  duration: `${(5 + seed(i, 17) * 7).toFixed(1)}s`,
+  delay:    `${(seed(i, 19) * -10).toFixed(1)}s`,
+}));
+// Fewer on mobile
+const LOGOS_MOBILE = LOGOS_DESKTOP.filter((_, i) => i % 3 === 0);
 
+function LogoBackground() {
+  const isMobile = isMobileDevice();
+  const logos = isMobile ? LOGOS_MOBILE : LOGOS_DESKTOP;
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" style={{ zIndex: 0 }}>
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none select-none"
+      style={{ zIndex: 0 }}
+    >
       {logos.map((l, i) => (
-        <motion.img
+        <img
           key={i}
           src={logoImage}
           alt=""
@@ -40,11 +44,11 @@ function LogoBackground() {
             width: l.size,
             height: l.size,
             opacity: l.opacity,
-            rotate: l.rotate,
-            filter: 'brightness(1.4) saturate(0.6)',
+            transform: `rotate(${l.rotate}deg)`,
+            filter: 'brightness(1.4) saturate(0.5)',
+            animation: `logoBob ${l.duration} ease-in-out ${l.delay} infinite`,
+            willChange: 'transform',
           }}
-          animate={{ y: [0, -16, 0], rotate: [l.rotate - 5, l.rotate + 5, l.rotate - 5] }}
-          transition={{ duration: l.duration, repeat: Infinity, ease: 'easeInOut', delay: l.delay }}
         />
       ))}
     </div>
